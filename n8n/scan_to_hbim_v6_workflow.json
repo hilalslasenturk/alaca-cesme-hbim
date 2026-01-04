@@ -18,7 +18,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/01_Load.ipynb",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/01_Load.ipynb",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -56,7 +56,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/02_Preprocess.ipynb",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/02_Preprocess.ipynb",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -90,7 +90,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/03_Features.ipynb",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/03_Features.ipynb",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -124,7 +124,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/04_Segment.ipynb",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/04_Segment.ipynb",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -158,7 +158,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/05_Classify.ipynb",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/05_Classify.ipynb",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -192,7 +192,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/06_Mesh.ipynb",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/06_Mesh.ipynb",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -226,7 +226,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/07_IFC.ipynb",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/07_IFC.ipynb",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [

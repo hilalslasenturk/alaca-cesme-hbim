@@ -33,24 +33,90 @@ This framework provides a complete pipeline for:
 
 ## Architecture
 
+### Cloud Infrastructure
+
+```mermaid
+flowchart LR
+    subgraph Input
+        A[👤 User] -->|Upload .ply| B[(☁️ GCS)]
+    end
+
+    subgraph Orchestration
+        B <-->|Trigger| C[⚡ n8n]
+        C <-->|Execute| D[📓 Colab]
+    end
+
+    subgraph Processing
+        D --> E[Phase 1: Load]
+        E --> F[Phase 2: Preprocess]
+        F --> G[Phase 3: Features]
+        G --> H[Phase 4: Segment]
+        H --> I[Phase 5: Classify]
+        I --> J[Phase 6: Mesh]
+        J --> K[Phase 7: IFC]
+    end
+
+    subgraph Output
+        K -->|Export| L[(☁️ GCS)]
+        L -->|Download| M[📦 IFC File]
+        M -->|Manual| N[🏛️ Revit]
+    end
+
+    style A fill:#e1f5fe
+    style B fill:#fff3e0
+    style C fill:#f3e5f5
+    style D fill:#e8f5e9
+    style N fill:#fce4ec
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                  SCAN-TO-HBIM FRAMEWORK                     │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   [User]                                        [Output]    │
-│      │ Upload .ply                                 ↑ IFC    │
-│      ▼                                             │        │
-│   ┌─────┐     ┌─────┐     ┌───────┐     ┌───────┐          │
-│   │ GCS │◄───►│ n8n │◄───►│ Colab │     │ Revit │          │
-│   └─────┘     └─────┘     └───────┘     └───────┘          │
-│                   │                         ↑               │
-│                   ▼                         │ (manual)      │
-│              ┌────────┐              ┌──────┴─────┐        │
-│              │ GitHub │              │ IFC Files  │        │
-│              └────────┘              └────────────┘        │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+
+### Pipeline Flow
+
+```mermaid
+flowchart TB
+    subgraph Phase1[" 1️⃣ Load "]
+        A1[Raw Point Cloud<br>.ply / .las / .e57] --> A2[Validate & Load]
+    end
+
+    subgraph Phase2[" 2️⃣ Preprocess "]
+        A2 --> B1[Voxel Downsampling<br>0.01m]
+        B1 --> B2[SOR Outlier Removal]
+        B2 --> B3[Normal Estimation]
+    end
+
+    subgraph Phase3[" 3️⃣ Features "]
+        B3 --> C1[Geometric Features<br>9 per scale × 3 scales]
+        C1 --> C2[Position Features<br>X, Y, Z normalized]
+        C2 --> C3[30 Total Features]
+    end
+
+    subgraph Phase4[" 4️⃣ Segment "]
+        C3 --> D1[DBSCAN Clustering<br>eps=0.05m]
+    end
+
+    subgraph Phase5[" 5️⃣ Classify "]
+        D1 --> E1[Random Forest<br>100 trees]
+        E1 --> E2[🎯 99.86% Accuracy<br>Y_normalized key feature]
+    end
+
+    subgraph Phase6[" 6️⃣ Mesh "]
+        E2 --> F1[Poisson Reconstruction<br>depth=10]
+        F1 --> F2[Per-element Trimming]
+    end
+
+    subgraph Phase7[" 7️⃣ IFC "]
+        F2 --> G1[IFC4 Schema]
+        G1 --> G2[Semantic Property Sets]
+        G2 --> G3[📄 Final IFC Model]
+    end
+
+    style Phase1 fill:#e3f2fd
+    style Phase2 fill:#e8f5e9
+    style Phase3 fill:#fff3e0
+    style Phase4 fill:#fce4ec
+    style Phase5 fill:#f3e5f5
+    style Phase6 fill:#e0f2f1
+    style Phase7 fill:#fffde7
+    style E2 fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
 ```
 
 ---

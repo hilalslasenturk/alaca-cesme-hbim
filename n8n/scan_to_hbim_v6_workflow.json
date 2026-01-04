@@ -1,5 +1,5 @@
 {
-  "name": "Scan-to-HBIM V6 Pipeline",
+  "name": "Scan-to-HBIM V6 Pipeline (Cloud Functions)",
   "nodes": [
     {
       "parameters": {
@@ -18,7 +18,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/01_Load.ipynb",
+        "url": "https://europe-west1-concrete-racer-470219-h8.cloudfunctions.net/phase-01-load",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -29,20 +29,10 @@
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "version",
-              "value": "={{ $json.version || 'v1' }}"
-            },
-            {
-              "name": "input_file",
-              "value": "={{ $json.input_file }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ version: $json.version || 'v1', input_file: $json.input_file || 'raw/pointcloud/alaca_cesme_full.ply' }) }}",
         "options": {
-          "timeout": 300000
+          "timeout": 540000
         }
       },
       "id": "phase1-load",
@@ -51,12 +41,12 @@
       "typeVersion": 4.1,
       "position": [450, 300],
       "notesInFlow": true,
-      "notes": "Loads raw point cloud from GCS, validates, saves to 01_raw/"
+      "notes": "Cloud Function: Load & validate point cloud from GCS"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/02_Preprocess.ipynb",
+        "url": "https://europe-west1-concrete-racer-470219-h8.cloudfunctions.net/phase-02-preprocess",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -67,16 +57,10 @@
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "version",
-              "value": "={{ $json.version }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ version: $json.version || 'v1' }) }}",
         "options": {
-          "timeout": 600000
+          "timeout": 540000
         }
       },
       "id": "phase2-preprocess",
@@ -85,12 +69,12 @@
       "typeVersion": 4.1,
       "position": [650, 300],
       "notesInFlow": true,
-      "notes": "Voxel downsampling, SOR, Normal estimation"
+      "notes": "Cloud Function: Voxel downsample, SOR filter, normals"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/03_Features.ipynb",
+        "url": "https://europe-west1-concrete-racer-470219-h8.cloudfunctions.net/phase-03-features",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -101,16 +85,10 @@
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "version",
-              "value": "={{ $json.version }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ version: $json.version || 'v1' }) }}",
         "options": {
-          "timeout": 900000
+          "timeout": 540000
         }
       },
       "id": "phase3-features",
@@ -119,12 +97,12 @@
       "typeVersion": 4.1,
       "position": [850, 300],
       "notesInFlow": true,
-      "notes": "9 geometric features x 3 scales + Y_normalized (KEY!)"
+      "notes": "Cloud Function: 28 geometric features + Y_normalized"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/04_Segment.ipynb",
+        "url": "https://europe-west1-concrete-racer-470219-h8.cloudfunctions.net/phase-04-segment",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -135,16 +113,10 @@
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "version",
-              "value": "={{ $json.version }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ version: $json.version || 'v1' }) }}",
         "options": {
-          "timeout": 600000
+          "timeout": 540000
         }
       },
       "id": "phase4-segment",
@@ -153,12 +125,12 @@
       "typeVersion": 4.1,
       "position": [1050, 300],
       "notesInFlow": true,
-      "notes": "DBSCAN clustering"
+      "notes": "Cloud Function: DBSCAN clustering"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/05_Classify.ipynb",
+        "url": "https://europe-west1-concrete-racer-470219-h8.cloudfunctions.net/phase-05-classify",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -169,16 +141,10 @@
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "version",
-              "value": "={{ $json.version }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ version: $json.version || 'v1' }) }}",
         "options": {
-          "timeout": 600000
+          "timeout": 540000
         }
       },
       "id": "phase5-classify",
@@ -187,12 +153,12 @@
       "typeVersion": 4.1,
       "position": [1250, 300],
       "notesInFlow": true,
-      "notes": "Random Forest - 99.86% accuracy"
+      "notes": "Cloud Function: Y_normalized classification (99.86%)"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/06_Mesh.ipynb",
+        "url": "https://europe-west1-concrete-racer-470219-h8.cloudfunctions.net/phase-06-mesh",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -203,16 +169,10 @@
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "version",
-              "value": "={{ $json.version }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ version: $json.version || 'v1' }) }}",
         "options": {
-          "timeout": 900000
+          "timeout": 540000
         }
       },
       "id": "phase6-mesh",
@@ -221,12 +181,12 @@
       "typeVersion": 4.1,
       "position": [1450, 300],
       "notesInFlow": true,
-      "notes": "Poisson reconstruction + trim"
+      "notes": "Cloud Function: Poisson reconstruction per class"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://colab.research.google.com/github/hilalslasenturk/alaca-cesme-hbim/blob/main/notebooks/07_IFC.ipynb",
+        "url": "https://europe-west1-concrete-racer-470219-h8.cloudfunctions.net/phase-07-ifc",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -237,16 +197,10 @@
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "version",
-              "value": "={{ $json.version }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ version: $json.version || 'v1', building_name: 'Alaca Cesmesi' }) }}",
         "options": {
-          "timeout": 600000
+          "timeout": 540000
         }
       },
       "id": "phase7-ifc",
@@ -255,14 +209,14 @@
       "typeVersion": 4.1,
       "position": [1650, 300],
       "notesInFlow": true,
-      "notes": "IFC4 with 3 semantic property sets"
+      "notes": "Cloud Function: IFC4 with 3 semantic property sets"
     },
     {
       "parameters": {
         "operation": "upload",
         "bucketName": "alaca-cesme-hbim-v6",
         "fileName": "logs/pipeline_{{ $now.format('yyyy-MM-dd_HH-mm') }}.json",
-        "fileContent": "={{ JSON.stringify($json, null, 2) }}"
+        "fileContent": "={{ JSON.stringify({ workflow: 'scan-to-hbim-v6', version: $json.version, phases: ['load', 'preprocess', 'features', 'segment', 'classify', 'mesh', 'ifc'], status: 'complete', timestamp: $now.toISO() }, null, 2) }}"
       },
       "id": "save-log",
       "name": "Save Pipeline Log",
@@ -276,7 +230,7 @@
       "parameters": {
         "sendTo": "={{ $json.email || 'hilalslasenturk@gmail.com' }}",
         "subject": "Scan-to-HBIM V6 Pipeline Complete",
-        "message": "Pipeline completed successfully!\n\nVersion: {{ $json.version }}\nTimestamp: {{ $now.format('yyyy-MM-dd HH:mm:ss') }}\n\nOutputs:\n- IFC files: gs://alaca-cesme-hbim-v6/processed/{{ $json.version }}/07_ifc/\n\nNext step: Download IFC files and open in Revit (manual)"
+        "message": "Pipeline completed successfully!\n\nVersion: {{ $json.version }}\nTimestamp: {{ $now.format('yyyy-MM-dd HH:mm:ss') }}\n\nOutputs:\n- IFC files: gs://alaca-cesme-hbim-v6/processed/{{ $json.version }}/07_ifc/\n- Meshes: gs://alaca-cesme-hbim-v6/processed/{{ $json.version }}/06_mesh/\n\nView in GCS Console:\nhttps://console.cloud.google.com/storage/browser/alaca-cesme-hbim-v6/processed/{{ $json.version }}"
       },
       "id": "notify-complete",
       "name": "Notify Complete",
@@ -394,7 +348,7 @@
   "staticData": null,
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "scan-to-hbim-v6"
+    "instanceId": "scan-to-hbim-v6-cloud-functions"
   },
   "tags": [
     {
@@ -408,8 +362,12 @@
     {
       "name": "v6",
       "createdAt": "2026-01-04T00:00:00.000Z"
+    },
+    {
+      "name": "cloud-functions",
+      "createdAt": "2026-01-04T00:00:00.000Z"
     }
   ],
   "pinData": {},
-  "versionId": "v6.0"
+  "versionId": "v6.1-cloud-functions"
 }

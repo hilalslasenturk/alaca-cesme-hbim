@@ -1,0 +1,4 @@
+functions-framework==3.*
+google-cloud-storage==2.*
+open3d==0.18.*
+numpy==1.*

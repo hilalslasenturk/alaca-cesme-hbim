@@ -5,32 +5,50 @@
     "construction_date": "1586",
     "hijri_date": "H.995",
     "period": "Classical Ottoman (III. Murad)",
-    "patron": "Suleyman Aga",
+    "patron": "Dilsizoglu Suleyman Aga",
+    "patron_description": "III. Murad'in dilsizlerinden olan Suleyman Aga",
     "poet": "Sair Sai",
-    "structure_type": "Cesme (Fountain)",
-    "architectural_style": "Ottoman Classical"
+    "structure_type": "Meydan Cesmesi (Public Fountain)",
+    "architectural_style": "Ottoman Classical",
+    "inscription": "Han Murad'in lali makbulu olan ol Suleyman Aga bir ferhunda zat / Hayir icun yapti bu ali cesmeyi sahmul hayrat ol nigusifat / Selsebilasa revan tarihani dedi Sai 'Babi abi hayat'"
   },
   "location": {
     "country": "Turkey",
     "province": "Istanbul",
     "district": "Eyupsultan",
-    "neighborhood": "Eyup Sultan Mahallesi",
-    "address": "Eyup Sultan Mahallesi, Eyupsultan, Istanbul",
+    "neighborhood": "Abdulvedut Mahallesi",
+    "street": "Alaca Tekke Sokak",
+    "address": "Alaca Tekke Sokak, Abdulvedut Mahallesi, Eyupsultan, Istanbul",
+    "parcel": "72 Ada 1 Parsel",
     "coordinates": {
       "latitude": 41.0478,
       "longitude": 28.9342
     },
-    "parcel": "Ada/Parsel bilgisi"
+    "nearby": "D-100 Karayolu"
   },
   "conservation": {
-    "registration_status": "Registered Cultural Heritage",
-    "registration_number": "Tescil No",
-    "last_restoration": "2014",
-    "restoration_authority": "Istanbul Vakiflar Bolge Mudurlugu",
-    "current_condition": "Restored",
-    "original_function": "Public Fountain (Sebil)",
-    "current_function": "Historical Monument",
-    "threats": ["Urban development", "Air pollution", "Vandalism"]
+    "registration_status": "Tescilli Kultur Varligi",
+    "registration_number": "-",
+    "last_restoration": "2013",
+    "restoration_authority": "AA Restorasyon Insaat",
+    "restoration_team": [
+      {"name": "Muhammed Nur Yasar", "role": "Mimar"},
+      {"name": "Ugur Murekepci", "role": "Ic Mimar"},
+      {"name": "Ozge Akin", "role": "Restaurator"}
+    ],
+    "previous_restoration": "1995 (Eyup Belediyesi, Serif Dilber katkilariyla)",
+    "current_condition": "Restored but Passive",
+    "original_function": "Meydan Cesmesi (Public Fountain)",
+    "current_function": "Historical Monument (Passive)",
+    "threats": ["Urban development", "Vehicle traffic", "Air pollution", "Vandalism"]
+  },
+  "architectural_features": {
+    "construction_material": "Kesme Tas (Cut Stone)",
+    "roof_type": "Duz Cati (Flat Roof)",
+    "facade_count": 4,
+    "has_hazne": false,
+    "arch_type": "Bursa Kesimi (Pointed Arch)",
+    "decorations": ["Mermer ayna tasi", "Kilit tasi madalyon kabartmasi", "Cephe silmesi"]
   },
   "elements": [
     {
@@ -44,21 +62,21 @@
     },
     {
       "id": "seki",
-      "name_tr": "Seki",
-      "name_en": "Platform",
+      "name_tr": "Dinlenme Sekisi",
+      "name_en": "Resting Platform",
       "ifc_class": "IfcSlab",
       "material": "Mermer (Marble)",
-      "condition": "Good",
-      "description": "Marble platform/bench for water collection"
+      "condition": "Restored",
+      "description": "Marble platform/bench on both sides of the basin (yalak)"
     },
     {
       "id": "ana_cephe",
       "name_tr": "Ana Cephe",
-      "name_en": "Main Wall",
+      "name_en": "Main Facade",
       "ifc_class": "IfcWall",
       "material": "Kufeki Tasi (Ottoman Limestone)",
       "condition": "Restored",
-      "description": "Main facade wall with inscription panel"
+      "description": "Four-sided facade with cut stone, includes rear niche"
     },
     {
       "id": "kemer",
@@ -67,16 +85,16 @@
       "ifc_class": "IfcBuildingElementProxy",
       "material": "Kufeki Tasi (Ottoman Limestone)",
       "condition": "Restored",
-      "description": "Pointed arch above the water spout"
+      "description": "Bursa kesimi pointed arch with medallion keystone"
     },
     {
       "id": "sacak",
-      "name_tr": "Sacak",
-      "name_en": "Cornice",
+      "name_tr": "Sacak / Cati Silmesi",
+      "name_en": "Cornice / Roof Molding",
       "ifc_class": "IfcRoof",
       "material": "Kufeki Tasi (Ottoman Limestone)",
       "condition": "Good",
-      "description": "Decorative cornice with muqarnas profiles"
+      "description": "Stone cornice running along the roofline"
     }
   ],
   "dimensions": {
@@ -86,8 +104,15 @@
     "note": "Measured from point cloud bounding box"
   },
   "survey": {
-    "scan_date": "2024",
-    "scanner_type": "Terrestrial Laser Scanner",
+    "scan_date": "2018-12",
+    "scanner_type": "FARO Laser Scanner Focus 3D X130",
+    "scanner_range_m": 130,
+    "scan_count": 4,
+    "scan_duration_min": 12,
+    "scan_quality": "1/4",
+    "scan_resolution": "4x",
+    "color_scan": true,
+    "processing_software": "Scene 5.5.3",
     "raw_points": 9250711,
     "processed_points": 620000,
     "voxel_size_m": 0.01,
@@ -96,9 +121,14 @@
   "references": [
     {
       "type": "Restoration Report",
-      "title": "Alaca Cesmesi Restorasyon Raporu",
-      "date": "2014",
-      "author": "Istanbul Vakiflar Bolge Mudurlugu"
+      "title": "190104-vm-r-014-alaca-cesme-rapor",
+      "date": "2019",
+      "author": "AA Restorasyon Insaat"
+    },
+    {
+      "type": "Historical Record",
+      "title": "Anitlar Kurulu Dosyasi",
+      "note": "Original inscription information source"
     },
     {
       "type": "Academic Paper",

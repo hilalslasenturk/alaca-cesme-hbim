@@ -257,7 +257,12 @@ If you use this framework in your research, please cite:
 
 - **Author:** Hilal Sıla Şentürk
 - **Email:** hilalslasenturk@gmail.com
-- **University:** [Your University]
+- **University:** Ankara Yıldırım Beyazıt Üniversitesi
+
+### Supervisors
+
+- **Dr. Öğr. Üyesi Cemile Feyzan Şimşek** - Thesis Advisor
+- **Öğr. Gör. Dr. Ömer Faruk Pamak** - Co-Advisor
 
 ---
 

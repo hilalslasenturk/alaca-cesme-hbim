@@ -1,0 +1,415 @@
+{
+  "name": "Scan-to-HBIM V6 Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "scan-to-hbim-v6",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "webhookId": "scan-to-hbim-v6"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/01_Load.ipynb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "version",
+              "value": "={{ $json.version || 'v1' }}"
+            },
+            {
+              "name": "input_file",
+              "value": "={{ $json.input_file }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "phase1-load",
+      "name": "Phase 1: Load",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 300],
+      "notesInFlow": true,
+      "notes": "Loads raw point cloud from GCS, validates, saves to 01_raw/"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/02_Preprocess.ipynb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "version",
+              "value": "={{ $json.version }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "phase2-preprocess",
+      "name": "Phase 2: Preprocess",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [650, 300],
+      "notesInFlow": true,
+      "notes": "Voxel downsampling, SOR, Normal estimation"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/03_Features.ipynb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "version",
+              "value": "={{ $json.version }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 900000
+        }
+      },
+      "id": "phase3-features",
+      "name": "Phase 3: Features",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 300],
+      "notesInFlow": true,
+      "notes": "9 geometric features x 3 scales + Y_normalized (KEY!)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/04_Segment.ipynb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "version",
+              "value": "={{ $json.version }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "phase4-segment",
+      "name": "Phase 4: Segment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1050, 300],
+      "notesInFlow": true,
+      "notes": "DBSCAN clustering"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/05_Classify.ipynb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "version",
+              "value": "={{ $json.version }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "phase5-classify",
+      "name": "Phase 5: Classify",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 300],
+      "notesInFlow": true,
+      "notes": "Random Forest - 99.86% accuracy"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/06_Mesh.ipynb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "version",
+              "value": "={{ $json.version }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 900000
+        }
+      },
+      "id": "phase6-mesh",
+      "name": "Phase 6: Mesh",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1450, 300],
+      "notesInFlow": true,
+      "notes": "Poisson reconstruction + trim"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://colab.research.google.com/github/hilalslasenturk/scan-to-hbim-v6/blob/main/notebooks/07_IFC.ipynb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "version",
+              "value": "={{ $json.version }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "phase7-ifc",
+      "name": "Phase 7: IFC",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1650, 300],
+      "notesInFlow": true,
+      "notes": "IFC4 with 3 semantic property sets"
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "alaca-cesme-hbim-v6",
+        "fileName": "logs/pipeline_{{ $now.format('yyyy-MM-dd_HH-mm') }}.json",
+        "fileContent": "={{ JSON.stringify($json, null, 2) }}"
+      },
+      "id": "save-log",
+      "name": "Save Pipeline Log",
+      "type": "n8n-nodes-base.googleCloudStorage",
+      "typeVersion": 1,
+      "position": [1850, 300],
+      "notesInFlow": true,
+      "notes": "Save execution log to GCS"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email || 'hilalslasenturk@gmail.com' }}",
+        "subject": "Scan-to-HBIM V6 Pipeline Complete",
+        "message": "Pipeline completed successfully!\n\nVersion: {{ $json.version }}\nTimestamp: {{ $now.format('yyyy-MM-dd HH:mm:ss') }}\n\nOutputs:\n- IFC files: gs://alaca-cesme-hbim-v6/processed/{{ $json.version }}/07_ifc/\n\nNext step: Download IFC files and open in Revit (manual)"
+      },
+      "id": "notify-complete",
+      "name": "Notify Complete",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [2050, 300],
+      "notesInFlow": true,
+      "notes": "Send email notification"
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Phase 1: Load",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phase 1: Load": {
+      "main": [
+        [
+          {
+            "node": "Phase 2: Preprocess",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phase 2: Preprocess": {
+      "main": [
+        [
+          {
+            "node": "Phase 3: Features",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phase 3: Features": {
+      "main": [
+        [
+          {
+            "node": "Phase 4: Segment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phase 4: Segment": {
+      "main": [
+        [
+          {
+            "node": "Phase 5: Classify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phase 5: Classify": {
+      "main": [
+        [
+          {
+            "node": "Phase 6: Mesh",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phase 6: Mesh": {
+      "main": [
+        [
+          {
+            "node": "Phase 7: IFC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phase 7: IFC": {
+      "main": [
+        [
+          {
+            "node": "Save Pipeline Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Pipeline Log": {
+      "main": [
+        [
+          {
+            "node": "Notify Complete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "scan-to-hbim-v6"
+  },
+  "tags": [
+    {
+      "name": "scan-to-hbim",
+      "createdAt": "2026-01-04T00:00:00.000Z"
+    },
+    {
+      "name": "heritage",
+      "createdAt": "2026-01-04T00:00:00.000Z"
+    },
+    {
+      "name": "v6",
+      "createdAt": "2026-01-04T00:00:00.000Z"
+    }
+  ],
+  "pinData": {},
+  "versionId": "v6.0"
+}

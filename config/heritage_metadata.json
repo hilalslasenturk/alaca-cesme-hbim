@@ -1,0 +1,111 @@
+{
+  "identity": {
+    "structure_name": "Alaca Cesmesi",
+    "structure_name_en": "Alaca Fountain",
+    "construction_date": "1586",
+    "hijri_date": "H.995",
+    "period": "Classical Ottoman (III. Murad)",
+    "patron": "Suleyman Aga",
+    "poet": "Sair Sai",
+    "structure_type": "Cesme (Fountain)",
+    "architectural_style": "Ottoman Classical"
+  },
+  "location": {
+    "country": "Turkey",
+    "province": "Istanbul",
+    "district": "Eyupsultan",
+    "neighborhood": "Eyup Sultan Mahallesi",
+    "address": "Eyup Sultan Mahallesi, Eyupsultan, Istanbul",
+    "coordinates": {
+      "latitude": 41.0478,
+      "longitude": 28.9342
+    },
+    "parcel": "Ada/Parsel bilgisi"
+  },
+  "conservation": {
+    "registration_status": "Registered Cultural Heritage",
+    "registration_number": "Tescil No",
+    "last_restoration": "2014",
+    "restoration_authority": "Istanbul Vakiflar Bolge Mudurlugu",
+    "current_condition": "Restored",
+    "original_function": "Public Fountain (Sebil)",
+    "current_function": "Historical Monument",
+    "threats": ["Urban development", "Air pollution", "Vandalism"]
+  },
+  "elements": [
+    {
+      "id": "zemin",
+      "name_tr": "Zemin",
+      "name_en": "Ground",
+      "ifc_class": "IfcSlab",
+      "material": "Tas Doseme",
+      "condition": "Good",
+      "description": "Ground surface around the fountain"
+    },
+    {
+      "id": "seki",
+      "name_tr": "Seki",
+      "name_en": "Platform",
+      "ifc_class": "IfcSlab",
+      "material": "Mermer (Marble)",
+      "condition": "Good",
+      "description": "Marble platform/bench for water collection"
+    },
+    {
+      "id": "ana_cephe",
+      "name_tr": "Ana Cephe",
+      "name_en": "Main Wall",
+      "ifc_class": "IfcWall",
+      "material": "Kufeki Tasi (Ottoman Limestone)",
+      "condition": "Restored",
+      "description": "Main facade wall with inscription panel"
+    },
+    {
+      "id": "kemer",
+      "name_tr": "Kemer",
+      "name_en": "Arch",
+      "ifc_class": "IfcBuildingElementProxy",
+      "material": "Kufeki Tasi (Ottoman Limestone)",
+      "condition": "Restored",
+      "description": "Pointed arch above the water spout"
+    },
+    {
+      "id": "sacak",
+      "name_tr": "Sacak",
+      "name_en": "Cornice",
+      "ifc_class": "IfcRoof",
+      "material": "Kufeki Tasi (Ottoman Limestone)",
+      "condition": "Good",
+      "description": "Decorative cornice with muqarnas profiles"
+    }
+  ],
+  "dimensions": {
+    "width_m": 5.32,
+    "depth_m": 3.00,
+    "height_m": 3.45,
+    "note": "Measured from point cloud bounding box"
+  },
+  "survey": {
+    "scan_date": "2024",
+    "scanner_type": "Terrestrial Laser Scanner",
+    "raw_points": 9250711,
+    "processed_points": 620000,
+    "voxel_size_m": 0.01,
+    "coordinate_system": "Local"
+  },
+  "references": [
+    {
+      "type": "Restoration Report",
+      "title": "Alaca Cesmesi Restorasyon Raporu",
+      "date": "2014",
+      "author": "Istanbul Vakiflar Bolge Mudurlugu"
+    },
+    {
+      "type": "Academic Paper",
+      "title": "From Survey to Semantic Representation for Cultural Heritage",
+      "authors": "Croce, V. et al.",
+      "journal": "ISPRS International Journal of Geo-Information",
+      "year": "2021"
+    }
+  ]
+}

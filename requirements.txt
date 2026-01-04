@@ -1,0 +1,35 @@
+# Scan-to-HBIM Framework Dependencies
+# Python 3.8+ required
+
+# Point cloud processing
+open3d>=0.17.0
+laspy>=2.5.0
+
+# Numerical computing
+numpy>=1.24.0
+scipy>=1.11.0
+
+# Machine learning
+scikit-learn>=1.3.0
+pandas>=2.0.0
+joblib>=1.3.0
+
+# IFC/BIM export
+ifcopenshell>=0.7.0
+
+# Visualization
+matplotlib>=3.7.0
+plotly>=5.15.0
+
+# Google Cloud (for cloud execution)
+google-cloud-storage>=2.10.0
+google-auth>=2.22.0
+
+# Utilities
+tqdm>=4.65.0
+python-dotenv>=1.0.0
+PyYAML>=6.0
+
+# Development (optional)
+jupyter>=1.0.0
+ipykernel>=6.25.0
